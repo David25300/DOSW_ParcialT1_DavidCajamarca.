@@ -165,3 +165,57 @@ A1. Correo no institucional
 - En el paso 7, el sistema detecta que el correo no es instituional.
 - El sistema muestra el estado RECHAZADO con el mensaje "Correo no institucional permitido".
 - El usuario corrige el correo y reintenta el envío.
+
+## PUNTO 6:
+
+### epica
+
+**Integracion centralizada de proveedores de pago**
+
+Necesitamos centralizar el procesamiento de pagos a través de multiples provedores externos 
+usando un mediador que cordine toda la comunicacion, para que el proceso principal de pago no 
+dependa de ningun provedor especifico.
+
+
+### Historia de Usuario
+
+**Procesar un pago usando cualquier proveedor disponible**
+
+**COMO** usuario, **QUIERO** realizar un pago seleccionando mi medio de pago preferido, **PARA QUE** 
+el sistema se encargue de elegir el proveedor correcto y me devuelva una respuesta en un 
+formato unico y yo pueda agilizar mis pagos.
+
+**Criterios de aceptación:**
+- Si pago en USD, el sistema usa Stripe automaticamente.
+- Si el medio de pago es PSE, el sistema usa Banco PSE.
+- La respuesta siempre tiene el mismo formato: estado, codigoTransaccion, mensaje y fecha.
+- Si el proveedor falla, el sistema responde con PENDIENTE.
+- Los campos extra que devuelva el proveedor se ignoran.
+
+
+### Tareas
+
+**T-01:**
+
+Crear la interfaz paymentMediator que haga como punto central de comunicacion entre el servicio de 
+pagos y los proveedores. La implementacion concreta (paymentMediatorImpl) se encarga de recibir la
+solicitud de pago, aplicar las reglas de negocio para elegir el proveedor correcto, 
+y devolver la respuesta en formato unico.
+
+
+**T-02**
+
+Crear las clases que se comunican con cada proveedor: PayUProvider, EPaycoProvider, StripeProvider
+y BancoPSEProvider. Cada una traduce la solicitud de pago al formato que el proveedor necesita 
+y convierte la respuesta al formato unico. Tambien denen manejar el caso de que el proveedor falle 
+y devolver PENDIENTE.
+
+
+**T-03**
+
+Meter las validaciones de negocio antes de enviar el pago, que el correo sea institucional, que 
+el monto sea mayor a 5.000 cop, que si la moneda es USD solo se use Stripe, y que si el medio es 
+PSE solo se use Banco PSE. Estas reglas las debe aplicar el mediador antes de delegar al proveedor 
+correspondiente.
+
+
