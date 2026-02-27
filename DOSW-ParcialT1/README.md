@@ -34,4 +34,8 @@ mantener un solo formato de salida y el poder cambiar de objetos sin caos.
   - Permitir que se pueda usar cualquier proveedor externo de los disponibles (Este usaria el patron Mediator)
 - **No Funcionales:**
   - La interfaz de la app web debe tener la paleta de colores correspondiente a la escuela.
-  - La app debe ser responsive. 
+  - La app debe ser responsive.
+
+## PUNTO 4:
+
+![DiagramaUso.jpg](docs%2Fimages%2FDiagramaUso.jpg)
