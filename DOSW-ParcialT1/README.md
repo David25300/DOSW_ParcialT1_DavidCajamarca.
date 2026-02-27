@@ -25,3 +25,13 @@ y campos obligatorios.
 caoticas entre objetos pues el patron restinge las comunicaciones directas entre objetos
 forzandolos a colaborar unicamente atravez de un objeto mediador. Esto nos va a permitir 
 mantener un solo formato de salida y el poder cambiar de objetos sin caos.
+
+## PUNTO 3:
+
+- **Funcionales:**
+  - Guardar la informacion de pago en AWS Mongo Atlas
+  - Guardar los certificados academicos asosiados en AWS S3 Bucket
+  - Permitir que se pueda usar cualquier proveedor externo de los disponibles (Este usaria el patron Mediator)
+- **No Funcionales:**
+  - La interfaz de la app web debe tener la paleta de colores correspondiente a la escuela.
+  - La app debe ser responsive. 
