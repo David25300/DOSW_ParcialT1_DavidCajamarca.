@@ -40,7 +40,7 @@ mantener un solo formato de salida y el poder cambiar de objetos sin caos.
 
 ![DiagramaUso.jpg](docs%2Fimages%2FDiagramaUso.jpg)
 
-## punto 5: Análisis de requerimientos
+## ## PUNTO 5: Análisis de requerimientos
 
 ## Código
 RF-01
@@ -55,16 +55,16 @@ a AWS Mongo Atlas y permitir que u usuario logueado consulte esta informacion de
 1. El usuario ingresa a la página.
 2. La pagina tiene un apartado de facturas al que el usuario accede.
 3. El usuario completa los campos de confirmacion de identidad requeridos.
-4. El aspirante envía la solicitud.
+4. El usuario envía la solicitud.
 5. El sistema valida datos, registra la inscripción y confirma el resultado.
 
 ## Actor principal
-Aspirante, es decir una persona interesada en inscribirse a la carrera.
+Usuario institucional, es decir una persona interesada en inscribirse a la carrera (debe tener correo intitucional).
 
 ## Precondiciones
-- El aspirante tiene acceso a internet y a la página de la escuela.
-- El formulario de inscripción está disponible para la carrera y periodo académico vigente.
-- El aspirante cuenta con la información personal y académica requerida.
+- El usuario tiene acceso a internet y a la página de la escuela.
+- El usuario tyiene correo instutucional.
+- El usuario cuenta con la información personal y académica requerida.
 
 ## Datos de entrada
 - Datos personales: nombres, apellidos, tipo y número de documento, fecha de nacimiento.
@@ -72,37 +72,96 @@ Aspirante, es decir una persona interesada en inscribirse a la carrera.
 
 ## Datos de salida
 - Número de solicitud.
-  - Estado.
+- Estado.
 - Mensajes de validación.
-- Resumen de la solicitud registrada.
+- Codigo.
 
 ## Flujo básico
-1. El aspirante ingresa a la sección Inscripción a la carrera.
+1. El usuario ingresa a la sección de facturas.
 2. El sistema presenta el formulario con los campos requeridos.
-3. El aspirante diligencia los datos solicitados.
-4. El aspirante adjunta documentos si el formulario lo solicita.
-5. El aspirante confirma que la información es correcta y acepta términos.
-6. El aspirante envía la inscripción.
-7. El sistema valida obligatoriedad y formato de los campos.
-8. El sistema registra la solicitud de inscripción.
-9. El sistema muestra confirmación con el código de inscripción y el resumen.
+3. El usuario diligencia los datos solicitados.
+4. El usuario confirma que la información es correcta y acepta términos.
+5. El usuario envía la solicitud.
+6. El sistema valida obligatoriedad y formato de los campos.
+7. El sistema registra la solicitud de factura.
+8. El sistema muestra la factura.
 
 ## Flujo alterno
 A1. Campos obligatorios incompletos
-- En el paso 7, el sistema detecta campos obligatorios vacíos.
+- En el paso 6, el sistema detecta campos obligatorios vacíos.
 - El sistema muestra mensajes indicando qué campos faltan.
-- El aspirante corrige y reintenta el envío.
+- El usuario corrige y reintenta el envío.
 
 A2. Formato inválido
-- En el paso 7, el sistema detecta algun formato incorrecto.
+- En el paso 6, el sistema detecta algun formato incorrecto.
 - El sistema informa el error por campo y no registra la solicitud.
-- El aspirante corrige y reenvía.
+- El usuario corrige y reenvía.
 
-A3. Periodo o carrera no disponible
-- En el paso 2 o 7, el sistema detecta que la carrerano está habilitada.
-- El sistema muestra mensaje y no permite finalizar la inscripción.
 
-A4. Fallo al guardar o falla del sistema
-- En el paso 8, ocurre un error de persistencia o indisponibilidad.
-- El sistema muestra un mensaje de error general y sugiere reintentar.
-- La solicitud no queda registrada hasta completar el proceso correctamente. 
+## Código
+RF-02
+
+## Nombre
+Permitir que se pueda usar cualquier proveedor externo de los disponibles
+
+## Descripción
+El sistema debe permitir procesar pagos atraves de cualquiera de los proveedores externos disponibles.
+El sistema interno de la Escuela no debe depender de ninguna implementación específica de proveedor, 
+permitiendo cambiar o agregar proveedores sin modificar el código del proceso principal de pago. 
+La respuesta decualquier proveedor debe unificarse en un formato institucional estándar compuesto 
+por estado, codigoTransaccion, mensaje, fechs.
+
+## Cómo se ejecutará
+1. El usuario ingresa a la plataforma.
+2. El usuario diligencia el formulario de solicitud de pago con sus datos personales y del pago.
+3. El usuario selecciona el medio de pago.
+4. El sistema determina automáticamente el proveedor adecuado según las regla.
+5. El sistema adapta la solicitud al formato específico del proveedor seleccionado y la envía.
+6. El sistema recibe la respuesta del proveedor, la traduce al formato institucional unificado y 
+la retorna al usuario.
+
+## Actor principal
+Usuario institucional, es decir cualquier persona con correo institucional o que desea realizar un 
+pago asosiado a la escuela.
+
+## Precondiciones
+- El usuario tiene acceso a internet y a la psgina.
+- El usuario cuenta con un correo institucional.
+- El monto del pago es mayor a 5.000 cop.
+
+## Datos de entrada
+- Nombre del pagador.
+- Documento de identidad.
+- Correo institucional.
+- Objetivo del pago.
+- Monto.
+- Moneda.
+- Medio de pago.
+
+## Datos de salida
+- Estado: APROBADO, RECHAZADO o PENDIENTE.
+- Código.
+- Mensaje.
+- Fecha.
+
+## Flujo básico
+1. El usuario ingresa a la sección de pagos de la pagina.
+2. El sistema presenta el formulario de solicitud de pago con los campos requeridos.
+3. El usuario diligencia los datos personales.
+4. El usuario selecciona el motivo del pago y diligencia el monto y la moneda.
+5. El usuario selecciona el medio de pago.
+6. El sistema valida la todos los campos.
+7. El sistema valida las reglas de negocio.
+8. El sistema selecciona automáticamente el proveedor adecuado según las reglas.
+9. El sistema adapta los datos de la solicitud al formato específico del proveedor seleccionado.
+10. El sistema envía la solicitud al proveedor externo.
+11. El proveedor procesa el pago y retorna una respuesta en su formato.
+12. El sistema traduce la respuesta del proveedor al formato institucional.
+13. El sistema almacena la información del pago en AWS Mongo Atlas.
+14. El sistema presenta al usuario la respuesta.
+
+## Flujo alterno
+A1. Correo no institucional
+- En el paso 7, el sistema detecta que el correo no es instituional.
+- El sistema muestra el estado RECHAZADO con el mensaje "Correo no institucional permitido".
+- El usuario corrige el correo y reintenta el envío.
