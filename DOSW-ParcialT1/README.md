@@ -219,3 +219,7 @@ PSE solo se use Banco PSE. Estas reglas las debe aplicar el mediador antes de de
 correspondiente.
 
 
+## PUNTO 7:
+
+![diagramadeClases.jpg](docs/images/diagramadeClases.jpg)
+
