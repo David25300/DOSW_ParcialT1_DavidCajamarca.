@@ -154,7 +154,7 @@ pago asosiado a la escuela.
 7. El sistema valida las reglas de negocio.
 8. El sistema selecciona automáticamente el proveedor adecuado según las reglas.
 9. El sistema adapta los datos de la solicitud al formato específico del proveedor seleccionado.
-10. El sistema envía la solicitud al proveedor externo.
+10. El sistema envia la solicitud al proveedor externo.
 11. El proveedor procesa el pago y retorna una respuesta en su formato.
 12. El sistema traduce la respuesta del proveedor al formato institucional.
 13. El sistema almacena la información del pago en AWS Mongo Atlas.
@@ -164,7 +164,7 @@ pago asosiado a la escuela.
 A1. Correo no institucional
 - En el paso 7, el sistema detecta que el correo no es instituional.
 - El sistema muestra el estado RECHAZADO con el mensaje "Correo no institucional permitido".
-- El usuario corrige el correo y reintenta el envío.
+- El usuario corrige el correo y reintenta el envio.
 
 ## PUNTO 6:
 
