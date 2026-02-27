@@ -39,3 +39,70 @@ mantener un solo formato de salida y el poder cambiar de objetos sin caos.
 ## PUNTO 4:
 
 ![DiagramaUso.jpg](docs%2Fimages%2FDiagramaUso.jpg)
+
+## punto 5: Análisis de requerimientos
+
+## Código
+RF-01
+
+## Nombre
+Guardar informacion de pago en AWS Mongo Atlas
+
+## Descripción
+La app web debe enviar la informacion de pago (cuenta de donde viene la transaccion, fecha, nombre titular, etc...)
+a AWS Mongo Atlas y permitir que u usuario logueado consulte esta informacion desde la pagina.
+## Cómo se ejecutará
+1. El usuario ingresa a la página.
+2. La pagina tiene un apartado de facturas al que el usuario accede.
+3. El usuario completa los campos de confirmacion de identidad requeridos.
+4. El aspirante envía la solicitud.
+5. El sistema valida datos, registra la inscripción y confirma el resultado.
+
+## Actor principal
+Aspirante, es decir una persona interesada en inscribirse a la carrera.
+
+## Precondiciones
+- El aspirante tiene acceso a internet y a la página de la escuela.
+- El formulario de inscripción está disponible para la carrera y periodo académico vigente.
+- El aspirante cuenta con la información personal y académica requerida.
+
+## Datos de entrada
+- Datos personales: nombres, apellidos, tipo y número de documento, fecha de nacimiento.
+- Servicio institucional elegido: Inscripción a Bootcamp, pago de certificados academicos, etc...
+
+## Datos de salida
+- Número de solicitud.
+  - Estado.
+- Mensajes de validación.
+- Resumen de la solicitud registrada.
+
+## Flujo básico
+1. El aspirante ingresa a la sección Inscripción a la carrera.
+2. El sistema presenta el formulario con los campos requeridos.
+3. El aspirante diligencia los datos solicitados.
+4. El aspirante adjunta documentos si el formulario lo solicita.
+5. El aspirante confirma que la información es correcta y acepta términos.
+6. El aspirante envía la inscripción.
+7. El sistema valida obligatoriedad y formato de los campos.
+8. El sistema registra la solicitud de inscripción.
+9. El sistema muestra confirmación con el código de inscripción y el resumen.
+
+## Flujo alterno
+A1. Campos obligatorios incompletos
+- En el paso 7, el sistema detecta campos obligatorios vacíos.
+- El sistema muestra mensajes indicando qué campos faltan.
+- El aspirante corrige y reintenta el envío.
+
+A2. Formato inválido
+- En el paso 7, el sistema detecta algun formato incorrecto.
+- El sistema informa el error por campo y no registra la solicitud.
+- El aspirante corrige y reenvía.
+
+A3. Periodo o carrera no disponible
+- En el paso 2 o 7, el sistema detecta que la carrerano está habilitada.
+- El sistema muestra mensaje y no permite finalizar la inscripción.
+
+A4. Fallo al guardar o falla del sistema
+- En el paso 8, ocurre un error de persistencia o indisponibilidad.
+- El sistema muestra un mensaje de error general y sugiere reintentar.
+- La solicitud no queda registrada hasta completar el proceso correctamente. 
